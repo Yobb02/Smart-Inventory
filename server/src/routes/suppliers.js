@@ -1,0 +1,10 @@
+import express from 'express';
+import Supplier from '../models/Supplier.js';
+import { protect } from '../middleware/auth.js';
+const router = express.Router();
+router.use(protect);
+router.get('/', async (req, res, next) => { try { res.json(await Supplier.find({ owner: req.user._id }).sort({ name: 1 })); } catch (e) { next(e); } });
+router.post('/', async (req, res, next) => { try { res.status(201).json(await Supplier.create({ ...req.body, owner: req.user._id })); } catch (e) { next(e); } });
+router.put('/:id', async (req, res, next) => { try { const s = await Supplier.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, req.body, { new: true, runValidators: true }); if (!s) return res.status(404).json({ message: 'Supplier not found in your account.' }); res.json(s); } catch (e) { next(e); } });
+router.delete('/:id', async (req, res, next) => { try { const s = await Supplier.findOneAndDelete({ _id: req.params.id, owner: req.user._id }); if (!s) return res.status(404).json({ message: 'Supplier not found in your account.' }); res.json({ message: 'Supplier deleted.' }); } catch (e) { next(e); } });
+export default router;

@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+.DS_Store
+npm-debug.log*
+.vercel
+
+# stale copies from an earlier folder move — kept out of the deploy build
+client/client/
+client/server/
+server/client/
+server/server/
