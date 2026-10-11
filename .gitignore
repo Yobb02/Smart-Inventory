@@ -8,7 +8,7 @@ npm-debug.log*
 .vercel
 
 # stale copies from an earlier folder move — kept out of the deploy build
-client/client/
+client/client/node_modules/
 client/server/
 server/client/
 server/server/
